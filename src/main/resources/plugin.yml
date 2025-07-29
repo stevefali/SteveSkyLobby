@@ -1,0 +1,4 @@
+name: SteveSkyLobby
+version: '1.0-SNAPSHOT'
+main: com.steve.steveSkyLobby.SteveSkyLobby
+api-version: '1.21'
