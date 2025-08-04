@@ -47,6 +47,12 @@ public class TpServerEvent implements Listener {
                 System.out.println("Error encoding plugin message" + ioException.getMessage());
             }
 
+        } else if (event.getBlock().getType() == Material.DIAMOND_BLOCK) {
+            Player player = event.getPlayer();
+
+
+            player.getServer().dispatchCommand(player, "server skyblock");
+
         }
     }
 
