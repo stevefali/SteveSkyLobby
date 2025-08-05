@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Consumer;
+
 public class BiomeCommand implements CommandExecutor {
 
 
@@ -28,22 +30,24 @@ public class BiomeCommand implements CommandExecutor {
 
             if (args.length > 0) {
                 if (args[0].equals("large")) {
-                    final Vector center = senda.getLocation().toVector();
+//                    final Vector center = senda.getLocation().toVector();
+                    final Vector center = new Vector(0, 64, 0);
 
                     // Visualization:
                     // [(3)Jungle]   [(2)Desert]  [(9)End(The Void)]
                     // [(4)Badlands] [(1)Plains]  [(8)Nether(The Void)]
                     // [(5)Savanna]  [(6)Taiga]   [(7)Ice Spikes]
 
-                    setSectionBiome(Biome.PLAINS, world, new Vector(center.getBlockX() - 50, 64, center.getBlockZ() - 50), 100, 50);
-                    setSectionBiome(Biome.DESERT, world, new Vector(center.getBlockX() - 50, 64, center.getBlockZ() - 150), 100, 50);
-                    setSectionBiome(Biome.JUNGLE, world, new Vector(center.getBlockX() - 150, 64, center.getBlockZ() - 150), 100, 50);
-                    setSectionBiome(Biome.BADLANDS, world, new Vector(center.getBlockX() - 150, 64, center.getBlockZ() - 50), 100, 50);
-                    setSectionBiome(Biome.SAVANNA, world, new Vector(center.getBlockX() - 150, 64, center.getBlockZ() + 50), 100, 50);
-                    setSectionBiome(Biome.TAIGA, world, new Vector(center.getBlockX() - 50, 64, center.getBlockZ() + 50), 100, 50);
-                    setSectionBiome(Biome.ICE_SPIKES, world, new Vector(center.getBlockX() + 50, 64, center.getBlockZ() + 50), 100, 50);
-                    setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, 64, center.getBlockZ() - 50), 100, 50);
-                    setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, 64, center.getBlockZ() - 150), 100, 50);
+                    setSectionBiome(Biome.PLAINS, world, new Vector(center.getBlockX() - 50, -36, center.getBlockZ() - 50), 100, 200, 100);
+                    setSectionBiome(Biome.DESERT, world, new Vector(center.getBlockX() - 50, -36, center.getBlockZ() - 150), 100, 200, 100);
+                    setSectionBiome(Biome.JUNGLE, world, new Vector(center.getBlockX() - 150, -36, center.getBlockZ() - 150), 100, 200, 100);
+                    setSectionBiome(Biome.BADLANDS, world, new Vector(center.getBlockX() - 150, -36, center.getBlockZ() - 50), 100, 200, 100);
+                    setSectionBiome(Biome.SAVANNA, world, new Vector(center.getBlockX() - 150, -36, center.getBlockZ() + 50), 100, 200, 100);
+                    setSectionBiome(Biome.TAIGA, world, new Vector(center.getBlockX() - 50, -36, center.getBlockZ() + 50), 100, 200, 100);
+                    setSectionBiome(Biome.ICE_SPIKES, world, new Vector(center.getBlockX() + 50, -36, center.getBlockZ() + 50), 100, 200, 100);
+                    setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, -36, center.getBlockZ() - 50), 100, 200, 100);
+                    setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, -36, center.getBlockZ() - 150), 100, 200, 100);
+
 
                     senda.sendMessage("§aSet all 9 region biomes :)");
                     return true;
@@ -59,34 +63,38 @@ public class BiomeCommand implements CommandExecutor {
 
                 return true;
             }
-
         } else {
             senda.sendMessage("§cThis command should be run in the void world for safety!");
             return true;
         }
-
     }
 
     /**
-     * Set the biome of each block in the cuboid region. Starts in the lowest x, y position and works is way up.
+     * Perform a block operation of each block in the cuboid region. Starts in the lowest numerical position and works is way up.
      *
-     * @param start      The lowest(x,z) corner of the region, with y in the vertical center.
-     * @param size       The length and width of the region.
-     * @param halfHeight Half the height of the region, since the start is in the vertical center.
+     * @param start     The lowest(x,y,z) corner of the region.
+     * @param sizeX     The x-size of the region.
+     * @param sizeY     The height of the region.
+     * @param sizeZ     The Z-size of the region
+     * @param operation The operation to be performed on each block
      */
-    private void setSectionBiome(Biome biome, World world, Vector start, int size, int halfHeight) {
-        int startY = start.getBlockY() - halfHeight;
-        for (int x = start.getBlockX(); x <= start.getBlockX() + size; x++) {
-            for (int z = start.getBlockZ(); z <= start.getBlockZ() + size; z++) {
-                for (int y = startY; y <= startY + (halfHeight * 2); y++) {
+    private void performCuboidSectionOperation(Vector start, int sizeX, int sizeY, int sizeZ, Consumer<Vector> operation) {
+        for (int x = start.getBlockX(); x <= start.getBlockX() + sizeX; x++) {
+            for (int z = start.getBlockZ(); z <= start.getBlockZ() + sizeZ; z++) {
+                for (int y = start.getBlockY(); y <= start.getBlockY() + sizeY; y++) {
                     try {
-                        world.getBlockAt(x, y, z).setBiome(biome);
+                        operation.accept(new Vector(x, y, z));
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
             }
         }
+    }
+
+    private void setSectionBiome(Biome biome, World world, Vector start, int sizeX, int sizeY, int sizeZ) {
+        performCuboidSectionOperation(start, sizeX, sizeY, sizeZ,
+                (v) -> world.getBlockAt(v.getBlockX(), v.getBlockY(), v.getBlockZ()).setBiome(biome));
     }
 
 }
