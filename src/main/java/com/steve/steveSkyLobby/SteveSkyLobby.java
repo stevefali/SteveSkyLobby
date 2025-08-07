@@ -1,6 +1,8 @@
 package com.steve.steveSkyLobby;
 
 import com.steve.steveSkyLobby.commands.BiomeCommand;
+import com.steve.steveSkyLobby.commands.MakeWorldCommand;
+import com.steve.steveSkyLobby.commands.SendPlayerCommand;
 import com.steve.steveSkyLobby.commands.ShowBiomeCommand;
 import com.steve.steveSkyLobby.event.BlockEvent;
 import com.steve.steveSkyLobby.event.TpServerEvent;
@@ -23,6 +25,8 @@ public final class SteveSkyLobby extends JavaPlugin {
 
         getCommand("biomeset").setExecutor(new BiomeCommand());
         getCommand("showBiome").setExecutor(new ShowBiomeCommand());
+        getCommand("makeWorldCopy").setExecutor(new MakeWorldCommand(this));
+        getCommand("sendPlayer").setExecutor(new SendPlayerCommand(this));
     }
 
     @Override

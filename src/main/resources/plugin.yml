@@ -8,4 +8,10 @@ commands:
     usage: "Usage: biomeset [large]"
   showbiome:
     description: Visualize block biomes
-    usage: "Usage: showbiomes"
+    usage: "Usage: showbiomes [large]"
+  makeWorldCopy:
+    description: Make a new world copying the voidBuildingWorld
+    usage: "Usage: makeWorldCopy"
+  sendPlayer:
+    description: Send player to a world
+    usage: "Usage: sendPlayer"
