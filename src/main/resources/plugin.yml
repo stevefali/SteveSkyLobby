@@ -15,3 +15,11 @@ commands:
   sendPlayer:
     description: Send player to a world
     usage: "Usage: sendPlayer"
+  setupBarriers:
+    description: Create barriers in void world
+#    usage: "setupbarriers <world>"
+  removebarrier:
+    description: Remove barriers for the specified region
+#    usage: "removebarrier <world> <section>"
+  setIsland:
+    description: Paste the appropriate island at the appropriate spot

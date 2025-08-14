@@ -31,19 +31,19 @@ public class BiomeCommand implements CommandExecutor {
                 final Vector center = new Vector(0, 64, 0);
 
                 // Visualization:
-                // [(3)Jungle]   [(2)Desert]  [(9)End(The Void)]
-                // [(4)Badlands] [(1)Plains]  [(8)Nether(The Void)]
-                // [(5)Savanna]  [(6)Taiga]   [(7)Ice Spikes]
+                // [(2)Jungle]   [(1)Desert]  [(8)End(The Void)]
+                // [(3)Badlands] [(0)Plains]  [(7)Nether(The Void)]
+                // [(4)Savanna]  [(5)Taiga]   [(6)Ice Spikes]
 
-                setSectionBiome(Biome.PLAINS, world, new Vector(center.getBlockX() - 50, -36, center.getBlockZ() - 50), 100, 200, 100);
-                setSectionBiome(Biome.DESERT, world, new Vector(center.getBlockX() - 50, -36, center.getBlockZ() - 150), 100, 200, 100);
-                setSectionBiome(Biome.JUNGLE, world, new Vector(center.getBlockX() - 150, -36, center.getBlockZ() - 150), 100, 200, 100);
-                setSectionBiome(Biome.BADLANDS, world, new Vector(center.getBlockX() - 150, -36, center.getBlockZ() - 50), 100, 200, 100);
-                setSectionBiome(Biome.SAVANNA, world, new Vector(center.getBlockX() - 150, -36, center.getBlockZ() + 50), 100, 200, 100);
-                setSectionBiome(Biome.TAIGA, world, new Vector(center.getBlockX() - 50, -36, center.getBlockZ() + 50), 100, 200, 100);
-                setSectionBiome(Biome.ICE_SPIKES, world, new Vector(center.getBlockX() + 50, -36, center.getBlockZ() + 50), 100, 200, 100);
-                setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, -36, center.getBlockZ() - 50), 100, 200, 100);
-                setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, -36, center.getBlockZ() - 150), 100, 200, 100);
+                setSectionBiome(Biome.PLAINS, world, new Vector(center.getBlockX() - 50, -64, center.getBlockZ() - 50), 100, 383, 100);
+                setSectionBiome(Biome.DESERT, world, new Vector(center.getBlockX() - 50, -64, center.getBlockZ() - 150), 100, 383, 100);
+                setSectionBiome(Biome.JUNGLE, world, new Vector(center.getBlockX() - 150, -64, center.getBlockZ() - 150), 100, 383, 100);
+                setSectionBiome(Biome.BADLANDS, world, new Vector(center.getBlockX() - 150, -64, center.getBlockZ() - 50), 100, 383, 100);
+                setSectionBiome(Biome.SAVANNA, world, new Vector(center.getBlockX() - 150, -64, center.getBlockZ() + 50), 100, 383, 100);
+                setSectionBiome(Biome.TAIGA, world, new Vector(center.getBlockX() - 50, -64, center.getBlockZ() + 50), 100, 383, 100);
+                setSectionBiome(Biome.ICE_SPIKES, world, new Vector(center.getBlockX() + 50, -64, center.getBlockZ() + 50), 100, 383, 100);
+                setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, -64, center.getBlockZ() - 50), 100, 383, 100);
+                setSectionBiome(Biome.THE_VOID, world, new Vector(center.getBlockX() + 50, -64, center.getBlockZ() - 150), 100, 383, 100);
 
                 senda.sendMessage("§aSet all 9 region biomes :)");
                 return true;
