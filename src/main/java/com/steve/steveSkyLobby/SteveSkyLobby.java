@@ -10,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class SteveSkyLobby extends JavaPlugin {
 
+    public static String pluginName;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -31,10 +33,12 @@ public final class SteveSkyLobby extends JavaPlugin {
         getCommand("removebarrier").setExecutor(new RemoveBarrierCommand(getServer()));
         getCommand("setIsland").setExecutor(new SetIslandCommand(this));
 
+
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
     }
+
 }

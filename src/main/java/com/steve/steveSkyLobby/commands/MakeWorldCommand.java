@@ -1,6 +1,7 @@
 package com.steve.steveSkyLobby.commands;
 
 import com.steve.steveSkyLobby.SteveSkyLobby;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.Command;
@@ -20,16 +21,18 @@ public class MakeWorldCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
 
-        World masterVoidWorld = plugin.getServer().getWorld("voidBuildingWorld");
-
-        WorldCreator worldCreator = new WorldCreator("nwTestVoidWorld2");
-
         try {
-            World testWorld = worldCreator.copy(masterVoidWorld).createWorld();
+
+//            World testWorld = worldCreator.copy(masterVoidWorld).createWorld();
+//            Bukkit.createWorld(new WorldCreator("worldStartpointTesterCopy"));
+            Bukkit.createWorld(new WorldCreator("voidBuildingworldCopyCopy"));
+
         } catch (Exception e) {
             System.out.println("Error creating world from copy!");
             e.printStackTrace();
         }
+
+        sender.sendMessage("§aLoaded the copied world!");
 
         return true;
     }

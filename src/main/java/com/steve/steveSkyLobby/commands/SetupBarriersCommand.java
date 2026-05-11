@@ -40,10 +40,10 @@ public class SetupBarriersCommand implements CommandExecutor, TabCompleter {
             int startY = -64;
             int endY = 319;
 
-            setBarrierBlocks(new Vector(-51, startY, -150), new Vector(-51, endY, 150), world);
-            setBarrierBlocks(new Vector(51, startY, -150), new Vector(51, endY, 150), world);
-            setBarrierBlocks(new Vector(-150, startY, -51), new Vector(150, endY, -51), world);
-            setBarrierBlocks(new Vector(-150, startY, 51), new Vector(150, endY, 51), world);
+            setBarrierBlocks(new Vector(-51, startY, -200), new Vector(-51, endY, 200), world);
+            setBarrierBlocks(new Vector(51, startY, -200), new Vector(51, endY, 200), world);
+            setBarrierBlocks(new Vector(-200, startY, -51), new Vector(200, endY, -51), world);
+            setBarrierBlocks(new Vector(-200, startY, 51), new Vector(200, endY, 51), world);
 
             if (sender instanceof Player) {
                 sender.sendMessage("§aCreated barriers in " + world.getName());
