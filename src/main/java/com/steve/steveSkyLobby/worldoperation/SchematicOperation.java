@@ -44,23 +44,29 @@ public class SchematicOperation {
                 }
 
                 ClipboardFormat format = ClipboardFormats.findByFile(schematicFile);
+
                 Clipboard clipboard;
+                try (ClipboardReader reader = format.getReader(new FileInputStream(schematicFile))) {
+                    clipboard = reader.read();
+                }
 
-                ClipboardReader reader = format.getReader(new FileInputStream(schematicFile));
-                clipboard = reader.read();
+                Bukkit.getScheduler().runTask(plugin, () -> {
+                    try (EditSession editSession = WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(world))) {
+                        ClipboardHolder holder = new ClipboardHolder(clipboard);
+                        Operation operation = holder
+                                .createPaste(editSession)
+                                .to(BlockVector3.at(location.getBlockX(), location.getBlockY(), location.getBlockZ()))
+                                .ignoreAirBlocks(true)
+                                .build();
 
-                EditSession editSession = WorldEdit.getInstance().newEditSession(BukkitAdapter.adapt(world));
-                ClipboardHolder holder = new ClipboardHolder(clipboard);
-                Operation operation = holder
-                        .createPaste(editSession)
-                        .to(BlockVector3.at(location.getBlockX(), location.getBlockY(), location.getBlockZ()))
-                        .ignoreAirBlocks(true)
-                        .build();
+                        Operations.complete(operation);
+                        editSession.close();
 
-                Operations.complete(operation);
-                editSession.close();
-
-                future.complete(true);
+                        future.complete(true);
+                    } catch (Exception e) {
+                        future.completeExceptionally(new WorldOperationException("Error pasting schematic: " + e.getMessage(), e));
+                    }
+                });
 
             } catch (IOException e) {
                 future.completeExceptionally(new WorldOperationException("Failed to read schematic file", e));
